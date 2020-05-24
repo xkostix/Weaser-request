@@ -1,0 +1,79 @@
+index.html
+--------------------------------------------------
+<html>
+  <head>
+    <title>Weather Widget</title>
+    <link rel="stylesheet" href="./base.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <main>
+      <section>
+        <button>Moscow</button>
+        <button>London</button>
+        <button>St Petersburg</button>
+      </section>
+      <section>
+        <img src="https://www.metaweather.com/static/img/weather/hc.svg" />
+        <h3>Выберите город</h3>
+        <span>И получите погоду</span>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
+--------------------------------------------------
+
+
+style.css
+--------------------------------------------------
+main {
+  padding: 30px;
+}
+
+img {
+  display: block;
+  width: 50px;
+  height: 50px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+}
+--------------------------------------------------
+
+
+
+script.js
+--------------------------------------------------
+function addData(index) {
+  fetch(`/api/${index}/`)
+    .then(e => e.json())
+    .then(function(data) {
+      document.querySelector("h3").innerText = data.city;
+      document.querySelector("span").innerText = data.temp;
+      document.querySelector("img").src = data.img;
+    })
+    .catch();
+}
+
+const buttons = document.querySelectorAll("button");
+
+buttons[0].addEventListener("click", function() {
+  addData(0);
+});
+
+buttons[1].addEventListener("click", function() {
+  addData(1);
+});
+
+buttons[2].addEventListener("click", function() {
+  addData(2);
+});
+--------------------------------------------------
+
